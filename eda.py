@@ -50,7 +50,7 @@ class EDA():
         output:
             levels: number of unique values of each variable including missing
         """
-        return len(np.unique(series))
+        return len(series.unique())
 
     def __percentiles(self, series, p):
         """
@@ -296,16 +296,20 @@ class EDA():
         plt.xlabel(xlabel)
         plt.ylabel(ylabel1)
         plt.title(title)
-        plt.xticks(index + bar_width, plot_df[bktvar], rotation=90)
-        plt.legend()
+        xtkoffset = -bar_width / 2. if (barvar2 is None) else 0
+        plt.xticks(index + xtkoffset, plot_df[bktvar], rotation=90)
+        plt.legend(loc='upper left')
 
         ax2 = ax.twinx()
         # if not comparing two pairs of values, use a different color for line, if yes, use the same color
         cidx = 1 if (barvar2 is None) else 0
-        ax2.plot(index + bar_width / 2.0, plot_df[linevar], color=self.mycolors[cidx], linestyle='--')
+        ax2.plot(index + xtkoffset, plot_df[linevar], color=self.mycolors[cidx], label=linevar,
+                 linestyle='--', marker='o')
         if linevar2 is not None:
-            ax2.plot(index + bar_width / 2.0, plot_df[linevar2], color=self.mycolors[1], linestyle='--')
+            ax2.plot(index + xtkoffset, plot_df[linevar2], color=self.mycolors[1], label=linevar2,
+                     linestyle='--', marker='o')
         ax2.set_ylabel(ylabel2)
+        ax2.legend(loc='upper right')
 
         plt.tight_layout()
         plt.show()
