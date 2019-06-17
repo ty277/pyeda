@@ -180,10 +180,10 @@ class EDA():
         self.freq = freq
 
         if self.printTb is True:
-            for v, t in freq.iteritems():
-                print '\n'
-                print v
-                print t
+            for v, t in iter(freq.items()):
+                print('\n')
+                print(v)
+                print(t)
 
     ############################ Numeric Variables: Histograms ##############################
     def num_histogram(self, data, percentile_range=None, bins=30, width=10, height=6, num_list=None):
